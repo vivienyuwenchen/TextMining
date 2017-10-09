@@ -194,15 +194,24 @@ if __name__ == "__main__":
             'The_Romance_of_Lust': 'http://www.gutenberg.org/cache/epub/30254/pg30254.txt',
             }
 
+    # for each title
     for title in titles:
+        # get the text from url and strip the header comments
         text = filter_PG_text(get_cache(url['%s' % title], '%s.txt' % title))
+        # get a list of the filtered words from the text
         word_list = get_word_list(text)
+        # top n words
         n = 50
+        # get a list of the top n words
         top_n_words = (get_top_n_words(word_list, n))
+        # print the top n words
         print('Top %d Words in %s:' % (n, title))
         print(top_n_words, '\n')
+        # print the sentiment of the top n words
         print('Sentiment of Top %d Words in %s:' % (n, title))
         print(sentiment_analyzer(top_n_words), '\n')
+        # print the sentiment of the whole text
         print('Sentiment of %s:' % title)
         print(sentiment_analyzer(text), '\n\n')
+        # generate a wordcloud with the filtered words from the text
         word_cloud(word_list, title)

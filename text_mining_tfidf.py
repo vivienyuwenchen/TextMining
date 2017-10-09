@@ -118,6 +118,7 @@ def get_top_n_words(word_list, n):
     ordered_by_frequency = ordered_by_frequency[0:n]
 
     list_ = []
+    # for the top n words, multiply the word by the frequency to simulate the frequency of the word in the text
     for word in ordered_by_frequency:
         list_.append((word + ' ') * word_counts[word])
 
@@ -134,6 +135,7 @@ def sentiment_analyzer(text):
     Returns:
         a sentiment analysis of the text
     """
+    # make sure the text is a string before using the sentiment analyzer
     if type(text) != str:
         text = ' '.join(text)
     analyzer = SentimentIntensityAnalyzer()
@@ -151,6 +153,7 @@ def word_cloud(text, title):
     Returns:
         nothing; saves the wordcloud to title.png
     """
+    # make sure the text is a string before using the wordcloud generator
     if type(text) == list:
         text = ' '.join(text)
     wordcloud = WordCloud(width = 1000, height = 500, background_color="black").generate(text)
@@ -169,9 +172,13 @@ def tfidf(word, text, text_list):
     Returns:
         the TF-IDF score of a word from the text
     """
+    # term frequency = number of times the word appears in the text / total number of words in the text
     tf = text.words.count(word) / len(text.words)
+    # number of texts containing the word
     n_containing = sum(1 for text in text_list if word in text.words)
+    # inverse document frequency = log(number of texts / (1 + number of texts containing the word))
     idf = math.log(len(text_list) / (1 + n_containing))
+    # term frequency-inverse document frequency = term frequency * inverse document frequency
     return tf * idf
 
 
@@ -186,32 +193,44 @@ if __name__ == "__main__":
             'The_Romance_of_Lust': 'http://www.gutenberg.org/cache/epub/30254/pg30254.txt',
             }
 
+    # create a list for the text from each title
     text_list = []
 
+    # for each title
     for title in titles:
+        # get the text from url and strip the header comments
         text = filter_PG_text(get_cache(url['%s' % title], '%s.txt' % title))
+        # append the adjusted top 500 words converted to textblob to the list of texts
+        # saves time by only calculating the TF-IDF scores for the top 500 words with the top 500 words
         text_list.append(tb(get_top_n_words(get_word_list(text), 500)))
 
-    list_ = [[],[],[]]
+    # create list of lists, one list for each title to store the top n words
+    list_ = [[] for i in range(len(titles))]
     n = 50
 
+    # for each text
     for i, text in enumerate(text_list):
-        print('Top %d words in %s with TF-IDF Scores:' % (n, titles[i]))
+        print('Top %d Words in %s with TF-IDF Scores:' % (n, titles[i]))
+        # create a dictionary with the words as the key and the scores as the value
         scores = {word: tfidf(word, text, text_list) for word in text.words}
+        # sort the words based on the scores from highest to lowest
         sorted_words = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+
         for word, score in sorted_words[:n]:
+            # print the word and its TF-IDF score for the top n words
             print('\tWord: {}, TF-IDF: {}'.format(word, round(score, 10)))
+            # append the word to the appropriate list
             list_[i].append(word)
         print('')
-
     print('')
 
+    # for each title
     for i, title in enumerate(titles):
-        text = filter_PG_text(get_cache(url['%s' % title], '%s.txt' % title))
+        # print the top n words
         print('Top %d Words in %s:' % (n, title))
         print(list_[i], '\n')
+        # print the sentiment of the top n words
         print('Sentiment of Top %d Words in %s:' % (n, title))
         print(sentiment_analyzer(list_[i]), '\n')
-        print('Sentiment of %s:' % title)
-        print(sentiment_analyzer(text), '\n\n')
+        # generate a wordcloud with the top n words
         word_cloud(list_[i], title)
