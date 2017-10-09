@@ -85,7 +85,7 @@ Sentiment of Top 50 Words in The_Romance_of_Lust:
 
 - {'neg': 0.141, 'neu': 0.501, 'pos': 0.358, 'compound': 0.9548}
 
-![The Romance of Lust WF Word Cloud](https://github.com/vivienyuwenchen/TextMining/blob/master/The_Romance_of_Lust_wf.png)
+[The Romance of Lust WF Word Cloud](https://github.com/vivienyuwenchen/TextMining/blob/master/The_Romance_of_Lust_wf.png)
 
 **Computed Using TF-IDF**
 
@@ -117,7 +117,7 @@ Sentiment of Top 50 Words in The_Romance_of_Lust:
 
 - {'neg': 0.21, 'neu': 0.434, 'pos': 0.356, 'compound': 0.9137}
 
-![The Romance of Lust TF-IDF Word Cloud](https://github.com/vivienyuwenchen/TextMining/blob/master/The_Romance_of_Lust_tfidf.png)
+[The Romance of Lust TF-IDF Word Cloud](https://github.com/vivienyuwenchen/TextMining/blob/master/The_Romance_of_Lust_tfidf.png)
 
 ### Reflection [~1 paragraph]
 
