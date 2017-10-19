@@ -26,7 +26,7 @@ At some point, while I was still fixing up the word frequency analysis script, I
 - *If you did some text analysis, what interesting things did you find? Graphs or other visualizations may be very useful here for showing your results.*
 - *If you created a program that does something interesting (e.g. a Markov text synthesizer), be sure to provide a few interesting examples of the program’s output.*
 
-I compared three novels: Frankenstein, Paradise Lost, and The Romance of Lust. Essentially, as a "feel-good" novel, The Romance of Lust is overall the most positive and the least negative. Even calculated with the top 50 words (using either word frequency analysis or TF-IDF), The Romance of Lust contains the highest positive score. On the other end of the spectrum, Frankenstein is the most negative, which makes sense because it's of a depressing horror genre. Meanwhile, Paradise Lost is the most neutral, not falling into either extreme of erotica or horror.
+I compared three novels: Frankenstein, Paradise Lost, and The Romance of Lust. Essentially, as a "feel-good" novel, The Romance of Lust is overall the most positive and the least negative. Even calculated with the top 50 words (using either word frequency analysis or TF-IDF), The Romance of Lust contains the highest positive score. On the other end of the spectrum, Frankenstein is the most negative, which makes sense because it's of a depressing horror genre. Meanwhile, Paradise Lost is the most neutral, not falling into either extreme of romance or horror.
 
 In terms of the comparison between word frequency analysis and TF-IDF, each has its pros and cons. Word frequency analysis is significantly easier to implement than TF-IDF and hard-coding a list or two of known stop words weeds out most of the irrelevant words. TF-IDF, however, generates words very unique to each text by comparing their appearance in other texts. As a result, the top 50 words and resulting word cloud generated with TF-IDF are much more exciting to look at than those generated with word frequency analysis. However, depending on how you calculate the TF-IDF score, the algorithm can often overlook motifs of a text that offhandedly appear in other texts. For example, "man", "life", and "father" are very important words in Frankenstein, but as they are words common to most other texts, they are deemed less important in TF-IDF and don't show up in the top 50 words.
 
@@ -85,7 +85,7 @@ Sentiment of Top 50 Words in The_Romance_of_Lust:
 
 - {'neg': 0.141, 'neu': 0.501, 'pos': 0.358, 'compound': 0.9548}
 
-![The Romance of Lust WF Word Cloud](https://github.com/vivienyuwenchen/TextMining/blob/master/The_Romance_of_Lust_wf.png)
+[The Romance of Lust WF Word Cloud](https://github.com/vivienyuwenchen/TextMining/blob/master/The_Romance_of_Lust_wf.png)
 
 **Computed Using TF-IDF**
 
@@ -117,7 +117,7 @@ Sentiment of Top 50 Words in The_Romance_of_Lust:
 
 - {'neg': 0.21, 'neu': 0.434, 'pos': 0.356, 'compound': 0.9137}
 
-![The Romance of Lust TF-IDF Word Cloud](https://github.com/vivienyuwenchen/TextMining/blob/master/The_Romance_of_Lust_tfidf.png)
+[The Romance of Lust TF-IDF Word Cloud](https://github.com/vivienyuwenchen/TextMining/blob/master/The_Romance_of_Lust_tfidf.png)
 
 ### Reflection [~1 paragraph]
 
