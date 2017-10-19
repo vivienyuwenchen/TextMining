@@ -27,7 +27,7 @@ def get_cache(url, file_name):
     Returns:
         text from url
     """
-    if exists(file_name) == False:
+    if not exists(file_name):
         file_ = open(file_name, 'wb')
         text = requests.get(url).text
         dump(text, file_)
@@ -147,7 +147,7 @@ def get_top_n_words(word_list, n):
 
     ordered_by_frequency = sorted(word_counts, key=word_counts.get, reverse=True)
 
-    return ordered_by_frequency[0:n]
+    return ordered_by_frequency[:n]
 
 
 def sentiment_analyzer(text):

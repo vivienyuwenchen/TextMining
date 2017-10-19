@@ -14,51 +14,7 @@ from stop_words import get_stop_words       # pip install stop_words
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from wordcloud import WordCloud             # pip install wordcloud
 from textblob import TextBlob as tb         # pip install textblob
-
-
-def get_cache(url, file_name):
-    """Writes text from url into file_name and returns text if file_name does not exist.
-    Otherwise, simply returns text from file_name. Assumes that text from file_name
-    matches text from url if file_name exists.
-
-    Args:
-        url: url you want to read text from
-        file_name: name of file you want to write to/read from
-
-    Returns:
-        text from url
-    """
-    if exists(file_name) == False:
-        file_ = open(file_name, 'wb')
-        text = requests.get(url).text
-        dump(text, file_)
-
-    return open(file_name, 'r', encoding='utf-8', errors='ignore')
-
-
-def filter_PG_text(text):
-    """Takes the raw text of a Project Gutenberg book as input. Strips away header
-    comments and returns the book portion of the text.
-
-    Args:
-        text: the raw text from a Project Gutenberg book
-
-    Returns:
-        the book portion of the Project Gutenberg book
-    """
-    lines = text.readlines()
-
-    start_line = 0
-    while lines[start_line].find('START OF THIS PROJECT GUTENBERG EBOOK') == -1:
-        start_line += 1
-    lines = lines[start_line+1:]
-
-    end_line = 0
-    while lines[end_line].find('END OF THIS PROJECT GUTENBERG EBOOK') == -1:
-        end_line += 1
-    lines = lines[:end_line-3]
-
-    return ' '.join(lines)
+from text_mining import get_cache, filter_PG_text, get_histogram
 
 
 def get_word_list(text):
@@ -77,26 +33,6 @@ def get_word_list(text):
         text[i] = text[i].strip(string.punctuation)
 
     return text
-
-
-def get_histogram(word_list):
-    """Takes a list of words as input and returns a dictionary with all the unique
-    words and their word counts with stop words removed.
-
-    Args:
-        word_list: a list of words (assumed to all be in lower case with no punctuation)
-
-    Returns:
-        a histogram; a dictionary with all the unique words and their word counts
-    """
-    word_counts = dict()
-    stop_words = get_stop_words('en')
-
-    for word in word_list:
-        if word not in stop_words and word != '':
-            word_counts[word] = word_counts.get(word, 0) + 1
-
-    return word_counts
 
 
 def get_top_n_words(word_list, n):
